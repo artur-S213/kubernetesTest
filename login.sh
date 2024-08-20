@@ -10,3 +10,6 @@ az login --service-principal -u ${{ secrets.AZURE_LOGIN_USERNAME }} -p ${{ secre
 - name: Log in to Azure
       run: |
         az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+
+az login --service-principal -u $sp_username -p $sp_password --tenant 8caad09b-4487-48f9-b7d6-b47e22b2dd2f
