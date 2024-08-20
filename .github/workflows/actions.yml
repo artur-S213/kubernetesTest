@@ -35,11 +35,6 @@ jobs:
         inlineScript: |
           az login
 
-
-    - name: Log in to Azure
-      run: |
-        az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
     - name: Get AKS Credentials
       run: |
         az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
