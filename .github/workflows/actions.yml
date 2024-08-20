@@ -37,6 +37,7 @@ jobs:
 
     - name: Get AKS Credentials
       run: |
+        az account show
         az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
 
     - name: Deploy to AKS
