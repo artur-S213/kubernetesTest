@@ -1,12 +1,13 @@
-name: Build and Deploy to AKS
+name: Deploy app to AKS with Namespace
 
 on:
   push:
-    branches:
-      - main
 
 env:
   AZURE_CONFIG_DIR: /tmp/.azure
+  DEPLOYMENT: pingpong
+  IMAGE: pingpong
+  BRANCH: ${{ github.ref_name }}
 
 jobs:
   build:
@@ -25,19 +26,24 @@ jobs:
     
     - name: Build and Push Docker image
       run: |
-        docker build -t ${{ secrets.ACR_NAME }}.azurecr.io/pingpong:${{ github.sha }} .
-        docker push ${{ secrets.ACR_NAME }}.azurecr.io/pingpong:${{ github.sha }}
+        docker build -t "${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE:$BRANCH${{ github.sha }}" .
+        docker push "${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE:$BRANCH${{ github.sha }}"
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Azure CLI
-      uses: azure/CLI@v1
+    # - name: Set up Azure CLI
+    #   uses: azure/CLI@v1
+    #   with:
+    #     azcliversion: 2.33.0
+    #     inlineScript: |
+    #       az login --service-principal -u 887f7420-def1-416b-8c68-c8615dce4cbe -p lYp8Q~BPaQbS9DDL4lpYJyOWyj0XpHTHndgeJcTJ --tenant 8caad09b-4487-48f9-b7d6-b47e22b2dd2f
+
+    - name: Azure Login
+      uses: azure/login@v1
       with:
-        azcliversion: 2.33.0
-        inlineScript: |
-          az login --service-principal -u 887f7420-def1-416b-8c68-c8615dce4cbe -p lYp8Q~BPaQbS9DDL4lpYJyOWyj0XpHTHndgeJcTJ --tenant 8caad09b-4487-48f9-b7d6-b47e22b2dd2f
+        creds: ${{ secrets.AZURE_SP_CREDENTIALS }}
 
     - name: Disable Azure CLI version check
       run: |            
@@ -52,8 +58,8 @@ jobs:
       uses: azure/aks-set-context@v1
       with:
         creds: ${{ secrets.AZURE_SP_CREDENTIALS }}
-        resource-group: arturresource
-        cluster-name: aks-learn-kubernetes
+        resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
+        cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
 
     # - name: Get AKS Credentials
     #   run: |
@@ -61,6 +67,10 @@ jobs:
 
     - name: Deploy to AKS
       run: |
-        kubectl set image deployment/pingpong pingpong=${{ secrets.ACR_NAME }}.azurecr.io/pingpong:${{ github.sha }}
-        kubectl rollout status deployment/pingpong
+          kubectl create namespace $BRANCH || true 
+          kubectl config set-context --current --namespace=$BRANCH
+          kustomize edit set namespace $BRANCH
+          kustomize edit set image $IMAGE=${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE:$BRANCH${{ github.sha }}
+          kustomize build . | kubectl apply -f -
+          kubectl rollout status deployment $DEPLOYMENT
 

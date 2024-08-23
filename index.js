@@ -12,5 +12,5 @@ app.get('/pingpong', (req, res) => {
 
 app.listen(port, () => {
     console.log(`PingPong app listening at http://localhost:${port}`);
-    console.log("Another log");
+    console.log("Changed Deployment with Namespace");
 });
