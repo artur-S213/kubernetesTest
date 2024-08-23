@@ -1,3 +1,3 @@
 # kubernetesTest
 
-Here i try to deploy an app to azure kubernetes cluster
+A pingpong app, that gets deployed to the azure kubernestes service 
