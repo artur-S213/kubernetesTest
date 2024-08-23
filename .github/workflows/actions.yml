@@ -36,10 +36,6 @@ jobs:
         inlineScript: |
           az login --service-principal -u 887f7420-def1-416b-8c68-c8615dce4cbe -p lYp8Q~BPaQbS9DDL4lpYJyOWyj0XpHTHndgeJcTJ --tenant 8caad09b-4487-48f9-b7d6-b47e22b2dd2f
 
-    - name: Get Azure Account Credentials
-      run: |
-        az account show
-
     - name: Get AKS Credentials
       run: |
         az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
