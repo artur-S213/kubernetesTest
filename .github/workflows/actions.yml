@@ -39,18 +39,24 @@ jobs:
         inlineScript: |
           az login --service-principal -u 887f7420-def1-416b-8c68-c8615dce4cbe -p lYp8Q~BPaQbS9DDL4lpYJyOWyj0XpHTHndgeJcTJ --tenant 8caad09b-4487-48f9-b7d6-b47e22b2dd2f
 
-    # - name: Disable Azure CLI version check
-    #   run: |            
-    #     export AZURE_HTTP_USER_AGENT='None'
+    - name: Disable Azure CLI version check
+      run: |            
+        export AZURE_HTTP_USER_AGENT='None'
 
     # - name: Create Azure Config Directory
     #   run: |
     #     mkdir -p /home/runner/.azure
-    #     chmod 755 /home/runner/.azure        
+    #     chmod 755 /home/runner/.azure  
+    
+    - name: Get AKS credentials
+      uses: azure/aks-set-context@v1
+      with:
+        resource-group: artursresource
+        cluster-name: aks-learn-kubernetes
 
-    - name: Get AKS Credentials
-      run: |
-        az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }} --admin
+    # - name: Get AKS Credentials
+    #   run: |
+    #     az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }} --admin
 
     - name: Deploy to AKS
       run: |
