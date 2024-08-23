@@ -51,6 +51,7 @@ jobs:
     - name: Get AKS credentials
       uses: azure/aks-set-context@v1
       with:
+        creds: ${{ secrets.AZURE_SP_CREDENTIALS }}
         resource-group: artursresource
         cluster-name: aks-learn-kubernetes
 
