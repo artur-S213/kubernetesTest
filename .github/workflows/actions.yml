@@ -26,8 +26,8 @@ jobs:
     
     - name: Build and Push Docker image
       run: |
-        docker build -t ${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE:$BRANCH${{ github.sha }} .
-        docker push ${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE:$BRANCH${{ github.sha }}
+        docker build -t ${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE:$BRANCH-${{ github.sha }} .
+        docker push ${{ secrets.ACR_NAME }}.azurecr.io/$IMAGE:$BRANCH-${{ github.sha }}
 
   deploy:
     needs: build
