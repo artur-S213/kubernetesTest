@@ -1,7 +1,7 @@
 #!/bin/bash
 
 group=arturresource
-service_principal_name=${group}09
+service_principal_name=${group}01
 subscription=fda5667f-8bc9-499d-bcc3-4a3fbc11746e
 # location=westeurope
 location=eastus
@@ -62,9 +62,12 @@ login() {
     set +x
 }
 
-create_group
 create_group_service_principal
-echo $sp_username
-echo $sp_password
+echo "_______________________"
+echo "Username: $sp_username"
+echo "Password: $sp_password"
 
-login
+# login
+
+# Username: 887f7420-def1-416b-8c68-c8615dce4cbe
+# Password: lYp8Q~BPaQbS9DDL4lpYJyOWyj0XpHTHndgeJcTJ
