@@ -39,13 +39,9 @@ jobs:
         inlineScript: |
           az login --service-principal -u 887f7420-def1-416b-8c68-c8615dce4cbe -p lYp8Q~BPaQbS9DDL4lpYJyOWyj0XpHTHndgeJcTJ --tenant 8caad09b-4487-48f9-b7d6-b47e22b2dd2f
 
-    - name: Set custom Azure config directory
-      run: |
-        export AZURE_CONFIG_DIR=/tmp/.azure
-
-    - name: Fix Permissions
-      run: |
-        sudo chmod -R 777 /home/runner/.azure
+    - name: Disable Azure CLI version check
+      run: |            
+        export AZURE_HTTP_USER_AGENT='None'
 
     - name: Get AKS Credentials
       run: |
