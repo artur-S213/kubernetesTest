@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  AZURE_CONFIG_DIR: /tmp/.azure
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -50,5 +53,3 @@ jobs:
         kubectl set image deployment/my-deployment my-container=${{ secrets.ACR_NAME }}.azurecr.io/myapp:${{ github.sha }}
         kubectl rollout status deployment/my-deployment
 
-      env:
-        AZURE_CONFIG_DIR: /tmp/.azure
