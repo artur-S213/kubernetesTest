@@ -43,14 +43,14 @@ jobs:
       run: |            
         export AZURE_HTTP_USER_AGENT='None'
 
-    - name: Create Azure Config Directory
-      run: |
-        mkdir -p /home/runner/.azure
-        chmod 755 /home/runner/.azure        
+    # - name: Create Azure Config Directory
+    #   run: |
+    #     mkdir -p /home/runner/.azure
+    #     chmod 755 /home/runner/.azure        
 
     - name: Get AKS Credentials
       run: |
-        az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }} --debug
+        az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }} --admin
 
     - name: Deploy to AKS
       run: |
