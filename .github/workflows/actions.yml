@@ -61,6 +61,6 @@ jobs:
 
     - name: Deploy to AKS
       run: |
-        kubectl set image deployment/my-deployment my-container=${{ secrets.ACR_NAME }}.azurecr.io/myapp:${{ github.sha }}
-        kubectl rollout status deployment/my-deployment
+        kubectl set image deployment/pingpong my-container=${{ secrets.ACR_NAME }}.azurecr.io/pingpong:${{ github.sha }}
+        kubectl rollout status deployment/pingpong
 
