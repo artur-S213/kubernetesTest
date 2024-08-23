@@ -44,9 +44,9 @@ jobs:
         export AZURE_CONFIG_DIR=/tmp/.azure
 
 
-    - name: Get AKS Credentials
-      run: |
-        az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
+    # - name: Get AKS Credentials
+    #   run: |
+    #     az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
 
     - name: Deploy to AKS
       run: |
