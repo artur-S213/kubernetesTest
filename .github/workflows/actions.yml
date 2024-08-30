@@ -64,18 +64,7 @@ jobs:
     # - name: Get AKS Credentials
     #   run: |
     #     az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }} --admin
-
-    - name: 'Kustomize Build'
-      uses: karancode/kustomize-github-action@master
-      with:
-        kustomize_version: '3.0.0'
-        kustomize_build_dir: 'kubernetes/'
-        kustomize_comment: false
-        kustomize_output_file: "gitops/rendered.yaml"
-        kustomize_build_options: "--load_restrictor none"
-        enable_alpha_plugins: true
-     
-
+ 
     - name: Deploy to AKS
       run: |
           kubectl create namespace $BRANCH || true 
