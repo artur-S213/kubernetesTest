@@ -6,7 +6,7 @@ const port = 3001; // Change the port as needed
 let counter = 0;
 
 app.get('/pingpong', (req, res) => {
-    res.send(`pong ${counter}`);
+    res.send(`pingpong ${counter}`);
     counter++;
 });
 
