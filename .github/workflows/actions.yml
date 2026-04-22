@@ -2,6 +2,9 @@ name: Deploy app to AKS with Namespace
 
 on:
   push:
+    tags:
+      - 'v*'
+  workflow_dispatch:  
 
 env:
   AZURE_CONFIG_DIR: /tmp/.azure
